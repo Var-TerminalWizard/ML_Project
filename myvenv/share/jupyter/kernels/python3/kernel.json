@@ -1,6 +1,6 @@
 {
  "argv": [
-  "d:/Machine Learning/Project/myvenv\\python.exe",
+  "python",
   "-m",
   "ipykernel_launcher",
   "-f",
