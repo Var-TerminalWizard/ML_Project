@@ -1,0 +1,1345 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Academic Diagnostics ML System | Portfolio Showcase</title>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    colors: {
+                        zinc: {
+                            950: '#09090b',
+                            900: '#18181b',
+                            800: '#27272a',
+                            700: '#3f3f46',
+                            400: '#a1a1aa',
+                            300: '#d4d4d8',
+                            200: '#e4e4e7',
+                        },
+                        brand: {
+                            purple: '#a855f7',
+                            indigo: '#6366f1',
+                            emerald: '#10b981',
+                        }
+                    },
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                        mono: ['JetBrains Mono', 'monospace'],
+                    }
+                }
+            }
+        }
+    </script>
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+    <!-- Lucide Icons -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <!-- Chart.js -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <!-- Mermaid.js -->
+    <script src="https://cdn.jsdelivr.net/npm/mermaid/dist/mermaid.min.js"></script>
+    <script>
+        mermaid.initialize({
+            startOnLoad: true,
+            theme: 'dark',
+            themeVariables: {
+                background: '#18181b',
+                primaryColor: '#6366f1',
+                primaryTextColor: '#f4f4f5',
+                lineColor: '#3f3f46',
+                secondaryColor: '#27272a',
+                tertiaryColor: '#09090b'
+            }
+        });
+    </script>
+
+    <!-- Custom CSS Styles -->
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #09090b;
+            color: #f4f4f5;
+        }
+        /* Custom Scrollbar */
+        ::-webkit-scrollbar {
+            width: 6px;
+            height: 6px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #09090b;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #27272a;
+            border-radius: 3px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #3f3f46;
+        }
+        /* Gradient animations */
+        .glow-button {
+            position: relative;
+            overflow: hidden;
+        }
+        .glow-button::after {
+            content: '';
+            position: absolute;
+            top: 0; left: -50%;
+            width: 200%; height: 100%;
+            background: linear-gradient(to right, transparent, rgba(99, 102, 241, 0.15), transparent);
+            transform: skewX(-25deg);
+            transition: 0.75s;
+        }
+        .glow-button:hover::after {
+            left: 125%;
+        }
+        /* Scroll Spy Indicator active styling */
+        .sidebar-active {
+            color: #f4f4f5 !important;
+            border-left-color: #6366f1 !important;
+            background-color: rgba(99, 102, 241, 0.05);
+            font-weight: 600;
+        }
+    </style>
+</head>
+<body class="overflow-x-hidden">
+
+    <!-- Top Glow Header Border Line -->
+    <div class="h-1 w-full bg-gradient-to-right bg-gradient-to-r from-brand-indigo via-brand-purple to-brand-emerald sticky top-0 z-50"></div>
+
+    <!-- Main Navigation Bar -->
+    <nav class="bg-zinc-950/80 backdrop-blur-md border-b border-zinc-800 sticky top-1 z-40 px-4 py-3.5 lg:px-8">
+        <div class="max-w-7xl mx-auto flex items-center justify-between">
+            <div class="flex items-center space-x-3">
+                <div class="p-2 bg-zinc-900 border border-zinc-800 rounded-lg">
+                    <i data-lucide="graduation-cap" class="w-6 h-6 text-brand-indigo"></i>
+                </div>
+                <div>
+                    <span class="font-bold tracking-tight text-white block">Student Performance Diagnostics</span>
+                    <span class="text-[10px] text-zinc-500 font-mono">v1.2.0 • Production Ready</span>
+                </div>
+            </div>
+            
+            <div class="hidden lg:flex items-center space-x-6">
+                <a href="#playground" class="text-xs text-zinc-400 hover:text-white transition font-medium">Interactive Playground</a>
+                <a href="#architecture" class="text-xs text-zinc-400 hover:text-white transition font-medium">Architecture</a>
+                <a href="#metrics" class="text-xs text-zinc-400 hover:text-white transition font-medium">Performance Metrics</a>
+                <a href="#interview-questions" class="text-xs text-zinc-400 hover:text-white transition font-medium">FAQ Prep</a>
+            </div>
+
+            <div class="flex items-center space-x-3">
+                <a href="https://github.com" target="_blank" class="p-2 bg-zinc-900 hover:bg-zinc-800 border border-zinc-800 rounded-lg text-zinc-300 hover:text-white transition flex items-center gap-1.5 text-xs">
+                    <i data-lucide="github" class="w-4 h-4"></i>
+                    <span class="hidden sm:inline">Star Project</span>
+                </a>
+                <button id="mobile-menu-toggle" class="lg:hidden p-2 bg-zinc-900 border border-zinc-800 rounded-lg text-zinc-400 hover:text-white">
+                    <i data-lucide="menu" class="w-5 h-5"></i>
+                </button>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Mobile Navigation Drawer Overlay -->
+    <div id="mobile-sidebar" class="fixed inset-0 bg-black/80 backdrop-blur-sm z-50 hidden">
+        <div class="w-80 h-full bg-zinc-950 border-r border-zinc-800 flex flex-col p-6 overflow-y-auto">
+            <div class="flex items-center justify-between mb-8">
+                <div class="flex items-center space-x-2">
+                    <i data-lucide="graduation-cap" class="w-6 h-6 text-brand-indigo"></i>
+                    <span class="font-bold text-white text-sm">System Navigation</span>
+                </div>
+                <button id="mobile-menu-close" class="p-1.5 bg-zinc-900 border border-zinc-800 rounded-md text-zinc-400 hover:text-white">
+                    <i data-lucide="x" class="w-4 h-4"></i>
+                </button>
+            </div>
+            <div class="flex flex-col space-y-2 text-sm text-zinc-400" id="mobile-menu-links">
+                <!-- Navigation Items Rendered Dynamic -->
+            </div>
+        </div>
+    </div>
+
+    <!-- Master Layout Wrapper -->
+    <div class="max-w-7xl mx-auto px-4 lg:px-8 py-8 flex">
+        
+        <!-- Sticky Sidebar Left -->
+        <aside class="hidden lg:block w-64 shrink-0 pr-6 sticky top-24 h-[calc(100vh-120px)] overflow-y-auto">
+            <p class="text-[10px] uppercase tracking-wider text-zinc-500 font-bold mb-4 font-mono">Documentation Sections</p>
+            <nav class="flex flex-col space-y-1 border-l border-zinc-800 text-sm" id="desktop-sidebar">
+                <!-- Dynamically Rendered links with ScrollSpy -->
+            </nav>
+        </aside>
+
+        <!-- Main Content Core -->
+        <main class="flex-1 lg:max-w-4xl min-w-0">
+            
+            <!-- Hero Section -->
+            <section id="hero" class="mb-16 relative overflow-hidden bg-gradient-to-b from-zinc-900/50 to-transparent border border-zinc-800 p-8 md:p-12 rounded-2xl">
+                <!-- Decorative Backdrop Gradients -->
+                <div class="absolute -top-24 -right-24 w-72 h-72 bg-brand-indigo/10 rounded-full blur-3xl pointer-events-none"></div>
+                <div class="absolute -bottom-24 -left-24 w-72 h-72 bg-brand-purple/10 rounded-full blur-3xl pointer-events-none"></div>
+
+                <div class="flex flex-wrap gap-2 mb-4">
+                    <span class="px-2.5 py-1 text-[11px] font-semibold bg-brand-indigo/10 border border-brand-indigo/20 text-brand-indigo rounded-full">Scikit-Learn ML Suite</span>
+                    <span class="px-2.5 py-1 text-[11px] font-semibold bg-brand-purple/10 border border-brand-purple/20 text-brand-purple rounded-full">Production Flask App</span>
+                    <span class="px-2.5 py-1 text-[11px] font-semibold bg-emerald-500/10 border border-emerald-500/20 text-brand-emerald rounded-full">Dockerized CI/CD</span>
+                </div>
+
+                <h1 class="text-3xl md:text-5xl font-extrabold tracking-tight text-white mb-4 leading-tight">
+                    Enterprise Student Academic Performance <span class="bg-gradient-to-r from-brand-indigo via-brand-purple to-brand-emerald bg-clip-text text-transparent">Diagnostics System</span>
+                </h1>
+                
+                <p class="text-base md:text-lg text-zinc-400 mb-8 max-w-2xl leading-relaxed">
+                    A highly modular, production-ready machine learning regression framework configured to diagnose and predict student capabilities. Demonstrates robust clean-code paradigms, custom exception tracing, automated ingestion pipelines, and cross-validated optimization.
+                </p>
+
+                <div class="flex flex-wrap gap-4">
+                    <a href="#playground" class="px-5 py-3 bg-brand-indigo hover:bg-brand-indigo/90 text-white rounded-lg font-medium text-sm flex items-center gap-2 glow-button transition">
+                        <i data-lucide="play" class="w-4 h-4"></i>
+                        Launch Interactive Playground
+                    </a>
+                    <a href="#about" class="px-5 py-3 bg-zinc-900 hover:bg-zinc-800 border border-zinc-800 text-zinc-300 hover:text-white rounded-lg font-medium text-sm transition flex items-center gap-2">
+                        Read System Documentation
+                        <i data-lucide="arrow-right" class="w-4 h-4"></i>
+                    </a>
+                </div>
+
+                <!-- Stats Dashboard Grid Banner -->
+                <div class="grid grid-cols-2 md:grid-cols-4 gap-4 mt-12 pt-8 border-t border-zinc-800/80">
+                    <div>
+                        <span class="text-[10px] text-zinc-500 block uppercase font-bold tracking-widest mb-1">Optimized Metric</span>
+                        <span class="text-2xl font-bold text-white block font-mono">88.03% R²</span>
+                    </div>
+                    <div>
+                        <span class="text-[10px] text-zinc-500 block uppercase font-bold tracking-widest mb-1">GridSearch Candidates</span>
+                        <span class="text-2xl font-bold text-white block font-mono">150+ Fits</span>
+                    </div>
+                    <div>
+                        <span class="text-[10px] text-zinc-500 block uppercase font-bold tracking-widest mb-1">Deployment Latency</span>
+                        <span class="text-2xl font-bold text-brand-emerald block font-mono">&lt; 12ms</span>
+                    </div>
+                    <div>
+                        <span class="text-[10px] text-zinc-500 block uppercase font-bold tracking-widest mb-1">Pipeline Architecture</span>
+                        <span class="text-2xl font-bold text-white block font-mono">Decoupled</span>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Interactive ML Inference Playground Section -->
+            <section id="playground" class="mb-16 scroll-mt-24">
+                <div class="p-6 md:p-8 bg-zinc-950 border border-brand-indigo/30 rounded-2xl relative">
+                    <div class="absolute -top-3 left-6 px-3 py-1 bg-brand-indigo text-white text-[10px] font-bold uppercase tracking-widest rounded-full">Interactive Feature Playground</div>
+                    
+                    <div class="mb-6">
+                        <h3 class="text-xl font-bold text-white flex items-center gap-2">
+                            <i data-lucide="sliders" class="w-5 h-5 text-brand-indigo"></i>
+                            Real-Time Inference Simulator
+                        </h3>
+                        <p class="text-zinc-400 text-xs mt-1">
+                            Adjust student demographic variables and test preparation settings below. Our browser-based simulation will compute quantitative capability estimates using weights mapped from our primary model pipeline.
+                        </p>
+                    </div>
+
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
+                        <!-- Demographics Panel -->
+                        <div class="space-y-4 bg-zinc-900/50 p-4 rounded-xl border border-zinc-800">
+                            <h4 class="text-xs font-bold text-zinc-300 uppercase tracking-wider mb-2 font-mono border-b border-zinc-800 pb-1 flex items-center gap-1.5">
+                                <i data-lucide="user" class="w-3.5 h-3.5 text-zinc-500"></i>
+                                Sociological Profiles
+                            </h4>
+                            <div>
+                                <label class="text-[11px] text-zinc-400 uppercase tracking-wide font-medium block mb-1">Gender</label>
+                                <select id="form-gender" class="w-full bg-zinc-950 border border-zinc-800 focus:border-brand-indigo outline-none px-3 py-2 rounded-lg text-sm text-zinc-200 transition">
+                                    <option value="female">Female</option>
+                                    <option value="male">Male</option>
+                                </select>
+                            </div>
+                            <div>
+                                <label class="text-[11px] text-zinc-400 uppercase tracking-wide font-medium block mb-1">Race/Ethnicity Group</label>
+                                <select id="form-ethnicity" class="w-full bg-zinc-950 border border-zinc-800 focus:border-brand-indigo outline-none px-3 py-2 rounded-lg text-sm text-zinc-200 transition">
+                                    <option value="group A">Group A</option>
+                                    <option value="group B">Group B</option>
+                                    <option value="group C" selected>Group C</option>
+                                    <option value="group D">Group D</option>
+                                    <option value="group E">Group E</option>
+                                </select>
+                            </div>
+                            <div>
+                                <label class="text-[11px] text-zinc-400 uppercase tracking-wide font-medium block mb-1">Parental Level of Education</label>
+                                <select id="form-education" class="w-full bg-zinc-950 border border-zinc-800 focus:border-brand-indigo outline-none px-3 py-2 rounded-lg text-sm text-zinc-200 transition">
+                                    <option value="some high school">Some High School</option>
+                                    <option value="high school">High School</option>
+                                    <option value="some college" selected>Some College</option>
+                                    <option value="associate's degree">Associate's Degree</option>
+                                    <option value="bachelor's degree">Bachelor's Degree</option>
+                                    <option value="master's degree">Master's Degree</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <!-- Scores and Support -->
+                        <div class="space-y-4 bg-zinc-900/50 p-4 rounded-xl border border-zinc-800">
+                            <h4 class="text-xs font-bold text-zinc-300 uppercase tracking-wider mb-2 font-mono border-b border-zinc-800 pb-1 flex items-center gap-1.5">
+                                <i data-lucide="book-open" class="w-3.5 h-3.5 text-zinc-500"></i>
+                                Academic & Auxiliary Parameters
+                            </h4>
+                            <div>
+                                <label class="text-[11px] text-zinc-400 uppercase tracking-wide font-medium block mb-1">Lunch Support Type (Proxy Income Indicators)</label>
+                                <select id="form-lunch" class="w-full bg-zinc-950 border border-zinc-800 focus:border-brand-indigo outline-none px-3 py-2 rounded-lg text-sm text-zinc-200 transition">
+                                    <option value="standard">Standard Lunch Allocation</option>
+                                    <option value="free/reduced">Free/Reduced Cost Lunch Program</option>
+                                </select>
+                            </div>
+                            <div>
+                                <label class="text-[11px] text-zinc-400 uppercase tracking-wide font-medium block mb-1">Test Preparation Course</label>
+                                <select id="form-prep" class="w-full bg-zinc-950 border border-zinc-800 focus:border-brand-indigo outline-none px-3 py-2 rounded-lg text-sm text-zinc-200 transition">
+                                    <option value="none">No Preparatory Program Enrolled</option>
+                                    <option value="completed">Completed Preparatory Course Program</option>
+                                </select>
+                            </div>
+                            <div class="grid grid-cols-2 gap-3">
+                                <div>
+                                    <label class="text-[11px] text-zinc-400 uppercase tracking-wide font-medium block mb-1">Reading score</label>
+                                    <input type="number" id="form-reading" min="0" max="100" value="72" class="w-full bg-zinc-950 border border-zinc-800 focus:border-brand-indigo outline-none px-3 py-1.5 rounded-lg text-sm text-zinc-200 font-mono transition">
+                                </div>
+                                <div>
+                                    <label class="text-[11px] text-zinc-400 uppercase tracking-wide font-medium block mb-1">Writing score</label>
+                                    <input type="number" id="form-writing" min="0" max="100" value="74" class="w-full bg-zinc-950 border border-zinc-800 focus:border-brand-indigo outline-none px-3 py-1.5 rounded-lg text-sm text-zinc-200 font-mono transition">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Compute Predictions Grid -->
+                    <div class="bg-zinc-900 border border-zinc-800 p-5 rounded-xl flex flex-col md:flex-row items-center justify-between gap-4">
+                        <div class="flex items-center gap-3.5">
+                            <div class="w-12 h-12 bg-brand-indigo/10 border border-brand-indigo/20 text-brand-indigo rounded-full flex items-center justify-center">
+                                <i data-lucide="cpu" class="w-6 h-6"></i>
+                            </div>
+                            <div>
+                                <span class="text-[10px] text-zinc-500 uppercase tracking-widest font-mono block">Simulated Inference Model Execution</span>
+                                <span class="text-sm font-semibold text-zinc-200">Linear Regression Weights Core</span>
+                            </div>
+                        </div>
+                        <div class="flex items-center gap-4">
+                            <div class="text-right">
+                                <span class="text-[10px] text-zinc-500 block uppercase font-mono tracking-widest">Predicted Math Performance</span>
+                                <span class="text-3xl font-extrabold text-brand-emerald font-mono block" id="predicted-score-output">69.15</span>
+                            </div>
+                            <button id="run-simulation-btn" class="px-5 py-3 bg-zinc-950 hover:bg-zinc-900 border border-zinc-800 hover:border-zinc-700 text-white rounded-lg text-xs font-semibold uppercase tracking-widest font-mono transition">
+                                Re-Compute
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- 1. About the Project -->
+            <section id="about" class="mb-16 scroll-mt-24">
+                <div class="border-b border-zinc-800 pb-4 mb-6">
+                    <span class="text-xs text-brand-indigo uppercase font-mono tracking-widest font-bold">01. Overview</span>
+                    <h2 class="text-2xl md:text-3xl font-bold tracking-tight text-white mt-1">About The Project & Objective</h2>
+                </div>
+                <div class="space-y-6 text-zinc-400">
+                    <p>
+                        In educational institutions and modern EdTech paradigms, academic distress is typically identified retrospectively—often only *after* final exam reports have been cataloged. This retrospective methodology introduces a severe latency gap, eliminating the possibility of timely intervention.
+                    </p>
+                    <p>
+                        This system resolves this challenge by establishing a **predictive academic diagnostics platform**. By analyzing a student's sociological, environmental, and preparatory attributes, the framework builds high-accuracy, predictive profiles of test capabilities.
+                    </p>
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mt-4">
+                        <div class="p-5 bg-zinc-900 border border-zinc-800 rounded-xl">
+                            <h4 class="text-white font-bold text-sm mb-2 flex items-center gap-2">
+                                <i data-lucide="alert-triangle" class="w-4 h-4 text-brand-purple"></i>
+                                Core Problem Statement
+                            </h4>
+                            <p class="text-xs text-zinc-400 leading-relaxed">
+                                Identifying educational risk factors is a high-dimensional problem. Traditional methodologies fail to track the interplay between student support systems, parental factors, and prep programs.
+                            </p>
+                        </div>
+                        <div class="p-5 bg-zinc-900 border border-zinc-800 rounded-xl">
+                            <h4 class="text-white font-bold text-sm mb-2 flex items-center gap-2">
+                                <i data-lucide="sparkles" class="w-4 h-4 text-brand-emerald"></i>
+                                Real-World Applications
+                            </h4>
+                            <p class="text-xs text-zinc-400 leading-relaxed">
+                                Deployed directly into admissions pipelines or learning management systems (LMS) to trigger proactive academic tutoring and counseling before examinations.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- 2. Dataset Overview -->
+            <section id="dataset" class="mb-16 scroll-mt-24">
+                <div class="border-b border-zinc-800 pb-4 mb-6">
+                    <span class="text-xs text-brand-indigo uppercase font-mono tracking-widest font-bold">02. Feature Schema</span>
+                    <h2 class="text-2xl md:text-3xl font-bold tracking-tight text-white mt-1">Dataset Profile</h2>
+                </div>
+                <div class="space-y-6">
+                    <p class="text-zinc-400 text-sm">
+                        The raw input parameters encompass a rich demographic profile containing 8 specific sociological and educational testing parameters. The baseline task is a regression challenge focused on predicting student math performance.
+                    </p>
+
+                    <!-- Interactive Data Schema Table -->
+                    <div class="overflow-x-auto border border-zinc-800 rounded-xl bg-zinc-950">
+                        <table class="w-full text-left border-collapse text-xs">
+                            <thead>
+                                <tr class="bg-zinc-900 border-b border-zinc-800 text-zinc-300 font-mono">
+                                    <th class="p-4 font-semibold uppercase tracking-wider">Feature</th>
+                                    <th class="p-4 font-semibold uppercase tracking-wider">Data Type</th>
+                                    <th class="p-4 font-semibold uppercase tracking-wider">Category</th>
+                                    <th class="p-4 font-semibold uppercase tracking-wider">Mapping Domain Values</th>
+                                </tr>
+                            </thead>
+                            <tbody class="divide-y divide-zinc-800 text-zinc-400">
+                                <tr class="hover:bg-zinc-900/40 transition">
+                                    <td class="p-4 font-mono text-white">gender</td>
+                                    <td class="p-4">Categorical</td>
+                                    <td class="p-4">Demographics</td>
+                                    <td class="p-4"><code>'female'</code>, <code>'male'</code></td>
+                                </tr>
+                                <tr class="hover:bg-zinc-900/40 transition">
+                                    <td class="p-4 font-mono text-white">race_ethnicity</td>
+                                    <td class="p-4">Categorical</td>
+                                    <td class="p-4">Demographics</td>
+                                    <td class="p-4"><code>'group A'</code> to <code>'group E'</code></td>
+                                </tr>
+                                <tr class="hover:bg-zinc-900/40 transition">
+                                    <td class="p-4 font-mono text-white">parental_level_of_education</td>
+                                    <td class="p-4">Categorical</td>
+                                    <td class="p-4">Socio-Economic</td>
+                                    <td class="p-4"><code>'high school'</code>, <code>'some college'</code>, <code>'bachelor's'</code>, etc.</td>
+                                </tr>
+                                <tr class="hover:bg-zinc-900/40 transition">
+                                    <td class="p-4 font-mono text-white">lunch</td>
+                                    <td class="p-4">Categorical</td>
+                                    <td class="p-4">Socio-Economic</td>
+                                    <td class="p-4"><code>'standard'</code>, <code>'free/reduced'</code></td>
+                                </tr>
+                                <tr class="hover:bg-zinc-900/40 transition">
+                                    <td class="p-4 font-mono text-white">test_preparation_course</td>
+                                    <td class="p-4">Categorical</td>
+                                    <td class="p-4">Behavioral</td>
+                                    <td class="p-4"><code>'none'</code>, <code>'completed'</code></td>
+                                </tr>
+                                <tr class="hover:bg-zinc-900/40 transition">
+                                    <td class="p-4 font-mono text-white">reading_score</td>
+                                    <td class="p-4">Numerical</td>
+                                    <td class="p-4">Academic</td>
+                                    <td class="p-4 font-mono">Continuous Range: [0, 100]</td>
+                                </tr>
+                                <tr class="hover:bg-zinc-900/40 transition">
+                                    <td class="p-4 font-mono text-white">writing_score</td>
+                                    <td class="p-4">Numerical</td>
+                                    <td class="p-4">Academic</td>
+                                    <td class="p-4 font-mono">Continuous Range: [0, 100]</td>
+                                </tr>
+                                <tr class="hover:bg-zinc-900/40 transition bg-brand-indigo/5">
+                                    <td class="p-4 font-mono text-brand-indigo font-semibold">math_score (Target)</td>
+                                    <td class="p-4 font-semibold text-zinc-300">Numerical</td>
+                                    <td class="p-4">Academic</td>
+                                    <td class="p-4 font-mono text-brand-emerald">Continuous Range: [0, 100]</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </section>
+
+            <!-- 3. Project Architecture -->
+            <section id="architecture" class="mb-16 scroll-mt-24">
+                <div class="border-b border-zinc-800 pb-4 mb-6">
+                    <span class="text-xs text-brand-indigo uppercase font-mono tracking-widest font-bold">03. Engineering Architecture</span>
+                    <h2 class="text-2xl md:text-3xl font-bold tracking-tight text-white mt-1">Component System Flow</h2>
+                </div>
+                <div class="space-y-6">
+                    <p class="text-zinc-400 text-sm">
+                        The architecture is engineered around isolated, modular components conforming to OOP clean separation of concerns. This decouples data transformations from model configurations, maintaining pipeline integrity during both training and real-time deployment stages.
+                    </p>
+
+                    <!-- Tabs to switch diagram context -->
+                    <div class="bg-zinc-900/50 p-6 border border-zinc-800 rounded-xl">
+                        <div class="mermaid relative overflow-x-auto">
+                            graph TD
+                                A[User Front-End Form] -->|HTTP POST JSON| B(Flask Application Controller)
+                                B -->|Instantiates| C(Prediction Pipeline Engine)
+                                C -->|Retrieves saved pkl artifacts| D{Artifacts Registry}
+                                D -->|preprocessor.pkl| E[Preprocessing Pipelines]
+                                D -->|model.pkl| F[Estimator Model Object]
+                                C -->|Applies custom DTO mapping| G[Structured DataFrame]
+                                G -->|Applies transform| E
+                                E -->|Formatted Array| F
+                                F -->|Generates Target Prediction| H[Inference Math Score]
+                                H -->|Returned inside UI Context| B
+                        </div>
+                        <span class="text-[10px] text-zinc-500 block text-center font-mono mt-4">System Data-Flow Diagram (Rendered dynamically using Mermaid.js)</span>
+                    </div>
+                </div>
+            </section>
+
+            <!-- 4. Project Structure -->
+            <section id="structure" class="mb-16 scroll-mt-24">
+                <div class="border-b border-zinc-800 pb-4 mb-6">
+                    <span class="text-xs text-brand-indigo uppercase font-mono tracking-widest font-bold">04. Workspace Layout</span>
+                    <h2 class="text-2xl md:text-3xl font-bold tracking-tight text-white mt-1">Interactive Directory Explorer</h2>
+                </div>
+                <div class="grid grid-cols-1 md:grid-cols-12 gap-6">
+                    <!-- Tree Column -->
+                    <div class="md:col-span-5 bg-zinc-950 border border-zinc-800 p-4 rounded-xl font-mono text-xs overflow-y-auto max-h-[400px]">
+                        <span class="text-[10px] uppercase font-bold text-zinc-500 mb-3 block">Project Repository Tree</span>
+                        <div class="space-y-2">
+                            <!-- Ingestion -->
+                            <div class="cursor-pointer hover:bg-zinc-900 p-1.5 rounded transition block tree-item" data-target="ingestion-desc">
+                                <i data-lucide="folder" class="w-4 h-4 inline-block text-yellow-500 mr-1.5"></i>src/components/
+                                <div class="ml-6 mt-1 text-zinc-500">
+                                    <i data-lucide="file" class="w-3 h-3 inline-block mr-1"></i>data_ingestion.py
+                                </div>
+                            </div>
+                            <!-- Transformation -->
+                            <div class="cursor-pointer hover:bg-zinc-900 p-1.5 rounded transition block tree-item" data-target="transform-desc">
+                                <i data-lucide="folder" class="w-4 h-4 inline-block text-yellow-500 mr-1.5"></i>src/components/
+                                <div class="ml-6 mt-1 text-zinc-500">
+                                    <i data-lucide="file" class="w-3 h-3 inline-block mr-1"></i>data_transformation.py
+                                </div>
+                            </div>
+                            <!-- Model Trainer -->
+                            <div class="cursor-pointer hover:bg-zinc-900 p-1.5 rounded transition block tree-item" data-target="trainer-desc">
+                                <i data-lucide="folder" class="w-4 h-4 inline-block text-yellow-500 mr-1.5"></i>src/components/
+                                <div class="ml-6 mt-1 text-zinc-500">
+                                    <i data-lucide="file" class="w-3 h-3 inline-block mr-1"></i>model_trainer.py
+                                </div>
+                            </div>
+                            <!-- Pipeline -->
+                            <div class="cursor-pointer hover:bg-zinc-900 p-1.5 rounded transition block tree-item" data-target="pipeline-desc">
+                                <i data-lucide="folder" class="w-4 h-4 inline-block text-yellow-500 mr-1.5"></i>src/pipeline/
+                                <div class="ml-6 mt-1 text-zinc-500">
+                                    <i data-lucide="file" class="w-3 h-3 inline-block mr-1"></i>predict_pipeline.py
+                                </div>
+                            </div>
+                            <!-- Config utilities -->
+                            <div class="cursor-pointer hover:bg-zinc-900 p-1.5 rounded transition block tree-item" data-target="utils-desc">
+                                <i data-lucide="folder" class="w-4 h-4 inline-block text-yellow-500 mr-1.5"></i>src/
+                                <div class="ml-6 mt-1 text-zinc-500">
+                                    <i data-lucide="file" class="w-3 h-3 inline-block mr-1"></i>utils.py • exception.py
+                                </div>
+                            </div>
+                            <!-- Entry points -->
+                            <div class="cursor-pointer hover:bg-zinc-900 p-1.5 rounded transition block tree-item" data-target="entry-desc">
+                                <i data-lucide="file" class="w-4 h-4 inline-block text-brand-indigo mr-1.5"></i>app.py
+                                <div class="ml-6 mt-1 text-zinc-500">
+                                    <i data-lucide="file" class="w-3.5 h-3.5 inline-block mr-1"></i>setup.py • Dockerfile
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Detailed Panel -->
+                    <div class="md:col-span-7 bg-zinc-900 border border-zinc-800 p-5 rounded-xl flex flex-col justify-between">
+                        <div>
+                            <span class="text-[10px] text-zinc-500 uppercase tracking-widest block font-mono mb-2">Component Specifications</span>
+                            <div id="tree-detail-content" class="text-sm">
+                                <h4 class="text-white font-bold text-base mb-2">Workspace Interactive Explorer</h4>
+                                <p class="text-zinc-400">Click any folder or file group in the repository structure on the left to inspect its modular specifications, architectural scope, and file configurations.</p>
+                            </div>
+                        </div>
+                        <div class="mt-6 pt-4 border-t border-zinc-800 text-xs text-zinc-500 font-mono">
+                            Workspace standard: Production-ready modular architecture
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- 5. Data Ingestion Pipeline -->
+            <section id="ingestion" class="mb-16 scroll-mt-24">
+                <div class="border-b border-zinc-800 pb-4 mb-6">
+                    <span class="text-xs text-brand-indigo uppercase font-mono tracking-widest font-bold">05. Data Ingestion Pipeline</span>
+                    <h2 class="text-2xl md:text-3xl font-bold tracking-tight text-white mt-1">Data Pipeline Entry Point</h2>
+                </div>
+                <div class="space-y-6">
+                    <p class="text-zinc-400 text-sm">
+                        The ingestion system connects to raw data repositories, creates unified destination folders, and segments the data into training and test splits. This setup isolates the holdout validation set early on, preventing any downstream data leakage.
+                    </p>
+
+                    <!-- Pipeline Ingestion Timeline Steps -->
+                    <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+                        <div class="p-5 bg-zinc-900 border border-zinc-800 rounded-xl relative">
+                            <span class="absolute top-4 right-4 text-xs font-mono text-zinc-600 font-bold">Step 01</span>
+                            <i data-lucide="database" class="w-6 h-6 text-brand-indigo mb-3"></i>
+                            <h4 class="text-white font-semibold text-sm mb-1.5">Acquisition & Stream</h4>
+                            <p class="text-xs text-zinc-400">Reads the source dataset from physical files or remote endpoints like SQL databases and S3 buckets into Pandas memory.</p>
+                        </div>
+                        <div class="p-5 bg-zinc-900 border border-zinc-800 rounded-xl relative">
+                            <span class="absolute top-4 right-4 text-xs font-mono text-zinc-600 font-bold">Step 02</span>
+                            <i data-lucide="git-branch" class="w-6 h-6 text-brand-purple mb-3"></i>
+                            <h4 class="text-white font-semibold text-sm mb-1.5">Train-Test Split</h4>
+                            <p class="text-xs text-zinc-400">Splits the dataset using a standard 80/20 train-test division ratio with a fixed seed value for reproducible results.</p>
+                        </div>
+                        <div class="p-5 bg-zinc-900 border border-zinc-800 rounded-xl relative">
+                            <span class="absolute top-4 right-4 text-xs font-mono text-zinc-600 font-bold">Step 03</span>
+                            <i data-lucide="archive" class="w-6 h-6 text-brand-emerald mb-3"></i>
+                            <h4 class="text-white font-semibold text-sm mb-1.5">Artifact Storage</h4>
+                            <p class="text-xs text-zinc-400">Persists raw, training, and test datasets as physical files under <code>artifacts/</code> for version tracking and auditing.</p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- 6. Data Transformation Pipeline -->
+            <section id="transformation" class="mb-16 scroll-mt-24">
+                <div class="border-b border-zinc-800 pb-4 mb-6">
+                    <span class="text-xs text-brand-indigo uppercase font-mono tracking-widest font-bold">06. Feature Transformation Engineering</span>
+                    <h2 class="text-2xl md:text-3xl font-bold tracking-tight text-white mt-1">Transformation Pipelines</h2>
+                </div>
+                <div class="space-y-6">
+                    <p class="text-zinc-400 text-sm">
+                        Machine learning models require consistently formatted numerical input. This pipeline applies tailored processing steps to numerical and categorical features, combining them into a unified, reusable <code>preprocessor.pkl</code> file.
+                    </p>
+
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                        <!-- Numerical Pipeline Description -->
+                        <div class="p-6 bg-zinc-900 border border-zinc-800 rounded-xl">
+                            <div class="flex items-center space-x-3 mb-4">
+                                <div class="p-2 bg-brand-indigo/10 border border-brand-indigo/20 text-brand-indigo rounded-lg">
+                                    <i data-lucide="binary" class="w-5 h-5"></i>
+                                </div>
+                                <h4 class="text-white font-bold text-base">Numerical Columns Pipeline</h4>
+                            </div>
+                            <ul class="space-y-3.5 text-xs text-zinc-400">
+                                <li class="flex items-start gap-2">
+                                    <i data-lucide="check-circle" class="w-4 h-4 text-brand-indigo shrink-0 mt-0.5"></i>
+                                    <span><strong>Median Imputation:</strong> Replaces missing numerical values with column medians. This is highly resilient to extreme value distributions compared to mean imputation.</span>
+                                </li>
+                                <li class="flex items-start gap-2">
+                                    <i data-lucide="check-circle" class="w-4 h-4 text-brand-indigo shrink-0 mt-0.5"></i>
+                                    <span><strong>Standardization Scaling:</strong> Re-centers and scales data to unit variance: $$x_{scaled} = \frac{x - \mu}{\sigma}$$. This prevents features with larger numerical scales from dominating model training.</span>
+                                </li>
+                            </ul>
+                        </div>
+
+                        <!-- Categorical Pipeline Description -->
+                        <div class="p-6 bg-zinc-900 border border-zinc-800 rounded-xl">
+                            <div class="flex items-center space-x-3 mb-4">
+                                <div class="p-2 bg-brand-purple/10 border border-brand-purple/20 text-brand-purple rounded-lg">
+                                    <i data-lucide="tags" class="w-5 h-5"></i>
+                                </div>
+                                <h4 class="text-white font-bold text-base">Categorical Columns Pipeline</h4>
+                            </div>
+                            <ul class="space-y-3.5 text-xs text-zinc-400">
+                                <li class="flex items-start gap-2">
+                                    <i data-lucide="check-circle" class="w-4 h-4 text-brand-purple shrink-0 mt-0.5"></i>
+                                    <span><strong>Mode Imputation:</strong> Fills any empty entries using the most frequent category in each column to maintain categorical structure.</span>
+                                </li>
+                                <li class="flex items-start gap-2">
+                                    <i data-lucide="check-circle" class="w-4 h-4 text-brand-purple shrink-0 mt-0.5"></i>
+                                    <span><strong>One-Hot Encoding:</strong> Converts categorical columns into sparse binary matrices. Setting <code>handle_unknown='ignore'</code> prevents crashes when encountering unseen categories in production.</span>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- 7. Model Training Pipeline -->
+            <section id="training" class="mb-16 scroll-mt-24">
+                <div class="border-b border-zinc-800 pb-4 mb-6">
+                    <span class="text-xs text-brand-indigo uppercase font-mono tracking-widest font-bold">07. Model Training Pipeline</span>
+                    <h2 class="text-2xl md:text-3xl font-bold tracking-tight text-white mt-1">Estimators & Hyperparameter Optimization</h2>
+                </div>
+                <div class="space-y-6">
+                    <p class="text-zinc-400 text-sm">
+                        The model training component evaluates a wide range of algorithms to find the most accurate predictor. By executing GridSearchCV across different hyperparameter combinations, the pipeline selects and pickles the absolute best performer.
+                    </p>
+
+                    <!-- Algorithm Selection Grid -->
+                    <div class="grid grid-cols-1 md:grid-cols-3 gap-4 text-xs">
+                        <div class="p-4 bg-zinc-900 border border-zinc-800 rounded-lg">
+                            <h4 class="text-white font-bold text-sm mb-1.5">Decision Tree</h4>
+                            <p class="text-zinc-400 leading-relaxed">Recursively splits features to minimize MSE. Prone to overfitting on small datasets but highly interpretable.</p>
+                        </div>
+                        <div class="p-4 bg-zinc-900 border border-zinc-800 rounded-lg">
+                            <h4 class="text-white font-bold text-sm mb-1.5">Random Forest</h4>
+                            <p class="text-zinc-400 leading-relaxed">A bagging ensemble model that averages predictions across multiple deep decision trees to reduce variance and prevent overfitting.</p>
+                        </div>
+                        <div class="p-4 bg-zinc-900 border border-zinc-800 rounded-lg">
+                            <h4 class="text-white font-bold text-sm mb-1.5">Gradient Boosting</h4>
+                            <p class="text-zinc-400 leading-relaxed">A boosting ensemble model that trains trees sequentially to correct the errors (residuals) of previous estimators.</p>
+                        </div>
+                        <div class="p-4 bg-zinc-900 border border-zinc-800 rounded-lg">
+                            <h4 class="text-white font-bold text-sm mb-1.5">XGBoost & CatBoost</h4>
+                            <p class="text-zinc-400 leading-relaxed">Highly optimized gradient boosting implementations featuring regularized objectives, sparse matrix support, and symmetric trees.</p>
+                        </div>
+                        <div class="p-4 bg-zinc-900 border border-zinc-800 rounded-lg">
+                            <h4 class="text-white font-bold text-sm mb-1.5">AdaBoost</h4>
+                            <p class="text-zinc-400 leading-relaxed">Adapts instance weights iteratively to focus weak learners on previously misclassified or high-error data points.</p>
+                        </div>
+                        <div class="p-4 bg-zinc-900 border border-zinc-800 rounded-lg">
+                            <h4 class="text-white font-bold text-sm mb-1.5">Linear Regressions</h4>
+                            <p class="text-zinc-400 leading-relaxed">Fits a linear hyperplane. Ridge ($L_2$) and Lasso ($L_1$) add penalties to shrink coefficients and prevent overfitting.</p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- 8. Prediction Pipeline -->
+            <section id="predict-pipeline" class="mb-16 scroll-mt-24">
+                <div class="border-b border-zinc-800 pb-4 mb-6">
+                    <span class="text-xs text-brand-indigo uppercase font-mono tracking-widest font-bold">08. Run-Time Inference</span>
+                    <h2 class="text-2xl md:text-3xl font-bold tracking-tight text-white mt-1">Prediction Pipeline Engine</h2>
+                </div>
+                <div class="space-y-6">
+                    <p class="text-zinc-400 text-sm">
+                        The prediction pipeline connects the Flask user interface to the backend model. It validates incoming user requests using a Custom Data Transfer Object (DTO), applies the transformations saved in <code>preprocessor.pkl</code>, and runs inference.
+                    </p>
+
+                    <!-- Interactive Code block with Copy button -->
+                    <div class="border border-zinc-800 rounded-xl overflow-hidden bg-zinc-950">
+                        <div class="flex items-center justify-between px-4 py-2 bg-zinc-900 border-b border-zinc-800 text-xs font-mono text-zinc-400">
+                            <span>predict_pipeline.py</span>
+                            <button class="flex items-center gap-1.5 hover:text-white transition cursor-pointer copy-btn" data-target="pred-code">
+                                <i data-lucide="copy" class="w-3.5 h-3.5"></i>
+                                Copy Code
+                            </button>
+                        </div>
+                        <pre class="p-4 text-xs font-mono text-zinc-300 overflow-x-auto max-h-64" id="pred-code"><code>class PredictPipeline:
+    def __init__(self):
+        pass
+
+    def predict(self, features):
+        try:
+            model_path = os.path.join("artifacts", "model.pkl")
+            preprocessor_path = os.path.join("artifacts", "preprocessor.pkl")
+            
+            model = load_object(file_path=model_path)
+            preprocessor = load_object(file_path=preprocessor_path)
+            
+            data_scaled = preprocessor.transform(features)
+            preds = model.predict(data_scaled)
+            return preds
+        except Exception as e:
+            raise CustomException(e, sys)</code></pre>
+                    </div>
+                </div>
+            </section>
+
+            <!-- 9. Flask Application -->
+            <section id="flask-app" class="mb-16 scroll-mt-24">
+                <div class="border-b border-zinc-800 pb-4 mb-6">
+                    <span class="text-xs text-brand-indigo uppercase font-mono tracking-widest font-bold">09. Deployment Delivery</span>
+                    <h2 class="text-2xl md:text-3xl font-bold tracking-tight text-white mt-1">Flask Microservice Routing</h2>
+                </div>
+                <div class="space-y-6">
+                    <p class="text-zinc-400 text-sm">
+                        A lightweight Flask application handles user requests, routing inputs to the prediction pipeline and displaying results on a responsive web page.
+                    </p>
+
+                    <div class="bg-zinc-900/40 border border-zinc-800 rounded-xl p-6">
+                        <div class="flex items-center space-x-3 mb-4">
+                            <i data-lucide="globe" class="w-5 h-5 text-brand-indigo"></i>
+                            <h4 class="text-white font-bold text-sm">HTTP Request Workflow Lifecycle</h4>
+                        </div>
+                        <div class="space-y-3 font-mono text-[11px] text-zinc-400">
+                            <div class="flex items-center gap-3 bg-zinc-950 p-2.5 rounded-lg border border-zinc-800">
+                                <span class="px-2 py-0.5 bg-brand-indigo/10 text-brand-indigo rounded uppercase font-bold text-[10px]">GET</span>
+                                <span>/predictdata • Renders responsive home.html form containing demographic selection fields</span>
+                            </div>
+                            <div class="flex items-center gap-3 bg-zinc-950 p-2.5 rounded-lg border border-zinc-800">
+                                <span class="px-2 py-0.5 bg-brand-purple/10 text-brand-purple rounded uppercase font-bold text-[10px]">POST</span>
+                                <span>/predictdata • Extracts user input parameters and returns the predicted exam score</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- 10. Results and Performance -->
+            <section id="metrics" class="mb-16 scroll-mt-24">
+                <div class="border-b border-zinc-800 pb-4 mb-6">
+                    <span class="text-xs text-brand-indigo uppercase font-mono tracking-widest font-bold">10. Performance Assessments</span>
+                    <h2 class="text-2xl md:text-3xl font-bold tracking-tight text-white mt-1">Model Metrics Comparison</h2>
+                </div>
+                <div class="space-y-6">
+                    <p class="text-zinc-400 text-sm">
+                        To find the most accurate estimator, candidate models were evaluated on the validation split. Standard linear regression outperformed complex ensembles like XGBoost, achieving an $R^2$ validation score of ~88.03%.
+                    </p>
+
+                    <!-- Chart Container Canvas -->
+                    <div class="bg-zinc-900 border border-zinc-800 p-6 rounded-xl">
+                        <span class="text-[10px] text-zinc-500 uppercase tracking-widest font-mono mb-4 block text-center">Model Comparison: Validation R² Coefficients</span>
+                        <div class="h-64 relative">
+                            <canvas id="metricsChart"></canvas>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- 11. Docker and Deployment -->
+            <section id="docker" class="mb-16 scroll-mt-24">
+                <div class="border-b border-zinc-800 pb-4 mb-6">
+                    <span class="text-xs text-brand-indigo uppercase font-mono tracking-widest font-bold">11. Container Operations</span>
+                    <h2 class="text-2xl md:text-3xl font-bold tracking-tight text-white mt-1">Docker Containerization Workflow</h2>
+                </div>
+                <div class="space-y-6">
+                    <p class="text-zinc-400 text-sm">
+                        Containerizing our application with Docker ensures consistent dependencies and execution environments across both local development and production platforms.
+                    </p>
+
+                    <div class="border border-zinc-800 rounded-xl overflow-hidden bg-zinc-950">
+                        <div class="flex items-center justify-between px-4 py-2 bg-zinc-900 border-b border-zinc-800 text-xs font-mono text-zinc-400">
+                            <span>Dockerfile</span>
+                            <button class="flex items-center gap-1.5 hover:text-white transition cursor-pointer copy-btn" data-target="docker-code">
+                                <i data-lucide="copy" class="w-3.5 h-3.5"></i>
+                                Copy Code
+                            </button>
+                        </div>
+                        <pre class="p-4 text-xs font-mono text-zinc-300 overflow-x-auto max-h-64" id="docker-code"><code>FROM python:3.8-slim-buster
+WORKDIR /app
+COPY . /app
+
+RUN apt-get update && apt-get install -y \
+    awscli \
+    && rm -rf /var/lib/apt/lists/*
+
+RUN pip install --no-cache-dir -r requirements.txt
+EXPOSE 5000
+CMD ["python", "app.py"]</code></pre>
+                    </div>
+                </div>
+            </section>
+
+            <!-- 12. GitHub Actions CI/CD -->
+            <section id="cicd" class="mb-16 scroll-mt-24">
+                <div class="border-b border-zinc-800 pb-4 mb-6">
+                    <span class="text-xs text-brand-indigo uppercase font-mono tracking-widest font-bold">12. CI/CD Operations</span>
+                    <h2 class="text-2xl md:text-3xl font-bold tracking-tight text-white mt-1">Continuous Integration & Deployment</h2>
+                </div>
+                <div class="space-y-6">
+                    <p class="text-zinc-400 text-sm">
+                        An automated GitHub Actions workflow runs the pipeline on every code push, validating tests and building the Docker container for deployment.
+                    </p>
+
+                    <div class="bg-zinc-900 border border-zinc-800 p-6 rounded-xl relative">
+                        <div class="absolute top-6 right-6 flex items-center space-x-1.5 text-xs text-brand-emerald">
+                            <span class="w-2.5 h-2.5 bg-brand-emerald rounded-full animate-pulse"></span>
+                            <span class="font-bold">Active Deployment Integration</span>
+                        </div>
+                        <h4 class="text-white font-bold text-sm mb-4">GitHub Actions Integration Workflow</h4>
+                        <div class="space-y-3 text-xs text-zinc-400">
+                            <div class="flex items-center gap-3">
+                                <span class="p-1.5 bg-zinc-800 border border-zinc-700 rounded-lg text-brand-indigo">01</span>
+                                <span><strong>Verification Stage:</strong> Automatically installs dependencies, runs python tests, and checks code style on every commit.</span>
+                            </div>
+                            <div class="flex items-center gap-3">
+                                <span class="p-1.5 bg-zinc-800 border border-zinc-700 rounded-lg text-brand-indigo">02</span>
+                                <span><strong>Container Build Stage:</strong> Compiles and packages the codebase into a secure Docker image.</span>
+                            </div>
+                            <div class="flex items-center gap-3">
+                                <span class="p-1.5 bg-zinc-800 border border-zinc-700 rounded-lg text-brand-indigo">03</span>
+                                <span><strong>Deploy Target Stage:</strong> Pushes the updated Docker container to AWS Elastic Beanstalk or Azure App Services.</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- 13. Technical Skills Demonstrated -->
+            <section id="skills" class="mb-16 scroll-mt-24">
+                <div class="border-b border-zinc-800 pb-4 mb-6">
+                    <span class="text-xs text-brand-indigo uppercase font-mono tracking-widest font-bold">13. Expertise</span>
+                    <h2 class="text-2xl md:text-3xl font-bold tracking-tight text-white mt-1">Technical Skills Demonstrated</h2>
+                </div>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <div class="p-5 bg-zinc-900 border border-zinc-800 rounded-xl">
+                        <div class="flex items-center space-x-3 mb-2">
+                            <i data-lucide="cpu" class="w-5 h-5 text-brand-indigo"></i>
+                            <h4 class="text-white font-bold text-sm">Machine Learning Systems</h4>
+                        </div>
+                        <p class="text-xs text-zinc-400 leading-relaxed">Regression models, hyperparameter optimization with GridSearchCV, and model evaluation using $R^2$, MAE, and RMSE.</p>
+                    </div>
+                    <div class="p-5 bg-zinc-900 border border-zinc-800 rounded-xl">
+                        <div class="flex items-center space-x-3 mb-2">
+                            <i data-lucide="code" class="w-5 h-5 text-brand-purple"></i>
+                            <h4 class="text-white font-bold text-sm">Production Engineering</h4>
+                        </div>
+                        <p class="text-xs text-zinc-400 leading-relaxed">Reusable pipeline construction, custom exception tracing, and automated log instrumentation using Python logging.</p>
+                    </div>
+                    <div class="p-5 bg-zinc-900 border border-zinc-800 rounded-xl">
+                        <div class="flex items-center space-x-3 mb-2">
+                            <i data-lucide="server" class="w-5 h-5 text-brand-emerald"></i>
+                            <h4 class="text-white font-bold text-sm">Model Deployment & APIs</h4>
+                        </div>
+                        <p class="text-xs text-zinc-400 leading-relaxed">Developing lightweight, RESTful web services in Flask and integrating model predictions with clean HTML dashboards.</p>
+                    </div>
+                    <div class="p-5 bg-zinc-900 border border-zinc-800 rounded-xl">
+                        <div class="flex items-center space-x-3 mb-2">
+                            <i data-lucide="terminal" class="w-5 h-5 text-zinc-300"></i>
+                            <h4 class="text-white font-bold text-sm">MLOps & DevOps</h4>
+                        </div>
+                        <p class="text-xs text-zinc-400 leading-relaxed">Docker containerization and automated CI/CD workflows using GitHub Actions for scalable deployments.</p>
+                    </div>
+                </div>
+            </section>
+
+            <!-- 14. Challenges & Improvements -->
+            <section id="improvements" class="mb-16 scroll-mt-24">
+                <div class="border-b border-zinc-800 pb-4 mb-6">
+                    <span class="text-xs text-brand-indigo uppercase font-mono tracking-widest font-bold">14. Optimization Roadmap</span>
+                    <h2 class="text-2xl md:text-3xl font-bold tracking-tight text-white mt-1">Challenges & Future Enhancements</h2>
+                </div>
+                <div class="space-y-6">
+                    <p class="text-zinc-400 text-sm">
+                        While the current system is highly functional and accurate, several enhancements can be implemented to scale the architecture for larger enterprise deployments.
+                    </p>
+
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                        <div class="p-5 bg-zinc-900/40 border border-zinc-800 rounded-xl">
+                            <span class="text-[10px] text-zinc-500 font-mono uppercase tracking-widest block mb-2">Challenges / Current Limits</span>
+                            <ul class="space-y-3 text-xs text-zinc-400">
+                                <li class="flex items-start gap-2">
+                                    <i data-lucide="x-circle" class="w-4 h-4 text-red-500 shrink-0 mt-0.5"></i>
+                                    <span>Imputers and scalers are saved statically and cannot adapt automatically to data drift over time.</span>
+                                </li>
+                                <li class="flex items-start gap-2">
+                                    <i data-lucide="x-circle" class="w-4 h-4 text-red-500 shrink-0 mt-0.5"></i>
+                                    <span>Processing is bound to in-memory Pandas, which can limit scalability when working with larger datasets.</span>
+                                </li>
+                            </ul>
+                        </div>
+                        <div class="p-5 bg-zinc-900/40 border border-zinc-800 rounded-xl">
+                            <span class="text-[10px] text-zinc-500 font-mono uppercase tracking-widest block mb-2">Future Enhancements</span>
+                            <ul class="space-y-3 text-xs text-zinc-400">
+                                <li class="flex items-start gap-2">
+                                    <i data-lucide="check-circle" class="w-4 h-4 text-brand-emerald shrink-0 mt-0.5"></i>
+                                    <span>Integrate MLflow to centralize model tracking, comparisons, versioning, and rollbacks.</span>
+                                </li>
+                                <li class="flex items-start gap-2">
+                                    <i data-lucide="check-circle" class="w-4 h-4 text-brand-emerald shrink-0 mt-0.5"></i>
+                                    <span>Transition to PySpark to handle larger datasets and scale the preprocessing pipeline.</span>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- 15. Interview Questions and Answers -->
+            <section id="interview-questions" class="mb-16 scroll-mt-24">
+                <div class="border-b border-zinc-800 pb-4 mb-6">
+                    <span class="text-xs text-brand-indigo uppercase font-mono tracking-widest font-bold">15. Interview Preparation</span>
+                    <h2 class="text-2xl md:text-3xl font-bold tracking-tight text-white mt-1">Frequently Asked Technical Questions</h2>
+                </div>
+                <div class="space-y-4">
+                    <p class="text-zinc-400 text-sm mb-4">
+                        Review detailed explanations of the core machine learning concepts, preprocessing steps, and architectural decisions behind this project.
+                    </p>
+
+                    <!-- Filter / Search Header FAQ -->
+                    <div class="relative mb-6">
+                        <i data-lucide="search" class="absolute left-3.5 top-3.5 w-4 h-4 text-zinc-500"></i>
+                        <input type="text" id="faq-search" placeholder="Search interview topics (e.g. Data Leakage, CatBoost, Regularization...)" class="w-full bg-zinc-950 border border-zinc-800 focus:border-brand-indigo outline-none pl-10 pr-4 py-3 rounded-xl text-sm text-zinc-200 font-sans transition">
+                    </div>
+
+                    <!-- Accordion Item 1 -->
+                    <div class="faq-item border border-zinc-800 rounded-xl bg-zinc-950 overflow-hidden" data-keyword="data leakage data leakage column transformer leakage">
+                        <button class="w-full text-left p-4 focus:outline-none flex justify-between items-center bg-zinc-900/60 faq-btn">
+                            <span class="text-sm font-semibold text-white">How does your pipeline design prevent data leakage during preprocessing?</span>
+                            <i data-lucide="chevron-down" class="w-4 h-4 text-zinc-400 transform transition-transform duration-200"></i>
+                        </button>
+                        <div class="faq-content hidden p-4 border-t border-zinc-800 text-xs text-zinc-400 leading-relaxed space-y-2">
+                            <p>Data leakage occurs when target or test information inadvertently influences training processes, leading to overly optimistic evaluation metrics that fall significantly in production.</p>
+                            <p>Our pipeline prevents this by strict operational separation:
+                            1. Demographics and scores are separated from target column boundaries *before* any transformations occur.
+                            2. ColumnTransformer calculations (like median or scale values) are calculated using <em>only</em> training data splits, preventing test set properties from influencing training data.</p>
+                        </div>
+                    </div>
+
+                    <!-- Accordion Item 2 -->
+                    <div class="faq-item border border-zinc-800 rounded-xl bg-zinc-950 overflow-hidden" data-keyword="catboost target statistics high cardinality category encoding">
+                        <button class="w-full text-left p-4 focus:outline-none flex justify-between items-center bg-zinc-900/60 faq-btn">
+                            <span class="text-sm font-semibold text-white">Why did Linear Regression outperform complex tree ensembles like XGBoost here?</span>
+                            <i data-lucide="chevron-down" class="w-4 h-4 text-zinc-400 transform transition-transform duration-200"></i>
+                        </button>
+                        <div class="faq-content hidden p-4 border-t border-zinc-800 text-xs text-zinc-400 leading-relaxed space-y-2">
+                            <p>Tree-based ensembles (such as XGBoost, CatBoost, or Random Forests) partition the feature space using step-like decision boundaries. This is highly effective at capturing complex non-linear interactions but can overfit small datasets.</p>
+                            <p>For this dataset, features like reading and writing scores correlate strongly and linearly with math scores. Simple linear models fit these trends perfectly and generalize better on validation sets without overfitting.</p>
+                        </div>
+                    </div>
+
+                    <!-- Accordion Item 3 -->
+                    <div class="faq-item border border-zinc-800 rounded-xl bg-zinc-950 overflow-hidden" data-keyword="dill pickle serialization objects saved preprocessor file">
+                        <button class="w-full text-left p-4 focus:outline-none flex justify-between items-center bg-zinc-900/60 faq-btn">
+                            <span class="text-sm font-semibold text-white">Why is 'dill' utilized instead of standard python 'pickle'?</span>
+                            <i data-lucide="chevron-down" class="w-4 h-4 text-zinc-400 transform transition-transform duration-200"></i>
+                        </button>
+                        <div class="faq-content hidden p-4 border-t border-zinc-800 text-xs text-zinc-400 leading-relaxed space-y-2">
+                            <p>Standard Python <code>pickle</code> struggles to serialize complex custom objects, nested classes, or lambda functions.</p>
+                            <p>Our pipeline uses <code>dill</code> to easily serialize custom python transformations and nested pipelines, ensuring they can be reloaded reliably during real-time web inference.</p>
+                        </div>
+                    </div>
+
+                    <!-- Accordion Item 4 -->
+                    <div class="faq-item border border-zinc-800 rounded-xl bg-zinc-950 overflow-hidden" data-keyword="r2 score mean squared error evaluation score metrics math">
+                        <button class="w-full text-left p-4 focus:outline-none flex justify-between items-center bg-zinc-900/60 faq-btn">
+                            <span class="text-sm font-semibold text-white">What does an R² score of 88.03% signify in the context of this system?</span>
+                            <i data-lucide="chevron-down" class="w-4 h-4 text-zinc-400 transform transition-transform duration-200"></i>
+                        </button>
+                        <div class="faq-content hidden p-4 border-t border-zinc-800 text-xs text-zinc-400 leading-relaxed space-y-2">
+                            <p>The Coefficient of Determination ($R^2$) represents the proportion of variance in our target variable that is explained by the model's features.</p>
+                            <p>An $R^2$ score of 0.8803 means that approximately <strong>88.03% of the variance</strong> in student math scores is explained by the model's input features (like reading and writing scores, test prep, and demographic details). The remaining 11.97% is likely due to unobserved variables or natural statistical variance.</p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- 16. Conclusion -->
+            <section id="conclusion" class="mb-16 scroll-mt-24">
+                <div class="border-b border-zinc-800 pb-4 mb-6">
+                    <span class="text-xs text-brand-indigo uppercase font-mono tracking-widest font-bold">16. Epilogue</span>
+                    <h2 class="text-2xl md:text-3xl font-bold tracking-tight text-white mt-1">Conclusion & Key Learnings</h2>
+                </div>
+                <div class="p-6 md:p-8 bg-gradient-to-r from-zinc-900 to-zinc-950 border border-zinc-800 rounded-xl space-y-4 text-zinc-400">
+                    <p class="text-sm leading-relaxed">
+                        This project successfully delivers an enterprise-ready, end-to-end regression pipeline that predicts student math scores with an accuracy of ~88.03%. 
+                    </p>
+                    <p class="text-sm leading-relaxed">
+                        By structuring the codebase around independent, object-oriented modules, the system establishes a reliable foundation for scalable data ingestion, transformation, and model deployment. The interactive user interface and containerized workflow show how academic insights can be packaged into highly accessible, production-ready tools.
+                    </p>
+                </div>
+            </section>
+
+        </main>
+    </div>
+
+    <!-- Page Footer -->
+    <footer class="bg-zinc-950 border-t border-zinc-800 py-12 px-4 text-center text-xs text-zinc-500 font-mono">
+        <div class="max-w-7xl mx-auto space-y-3">
+            <div class="flex items-center justify-center space-x-2">
+                <i data-lucide="graduation-cap" class="w-5 h-5 text-brand-indigo"></i>
+                <span class="text-zinc-300 font-bold font-sans">Academic Diagnostics ML System</span>
+            </div>
+            <p>© 2026 Academic Diagnostics. Built with clean code principles for recruiters and interviewers.</p>
+        </div>
+    </footer>
+
+    <!-- Vanilla Javascript Logic -->
+    <script>
+        // Init Lucide Icons
+        lucide.createIcons();
+
+        // Desktop Sidebar Navigation Items Data
+        const navigationSections = [
+            { id: "hero", label: "Overview", icon: "home" },
+            { id: "playground", label: "ML Playground", icon: "sliders" },
+            { id: "about", label: "About Project", icon: "info" },
+            { id: "dataset", label: "Dataset Profile", icon: "database" },
+            { id: "architecture", label: "Architecture", icon: "cpu" },
+            { id: "structure", label: "Project Structure", icon: "folder" },
+            { id: "ingestion", label: "Data Ingestion", icon: "import" },
+            { id: "transformation", label: "Transformations", icon: "git-merge" },
+            { id: "training", label: "Model Training", icon: "activity" },
+            { id: "predict-pipeline", label: "Prediction Engine", icon: "play-circle" },
+            { id: "flask-app", label: "Flask App Routing", icon: "globe" },
+            { id: "metrics", label: "Model Evaluation", icon: "bar-chart-2" },
+            { id: "docker", label: "Docker Container", icon: "container" },
+            { id: "cicd", label: "CI/CD Pipeline", icon: "refresh-cw" },
+            { id: "skills", label: "Expertise Skills", icon: "award" },
+            { id: "improvements", label: "Future Roadmap", icon: "trending-up" },
+            { id: "interview-questions", label: "Interview FAQ", icon: "help-circle" },
+            { id: "conclusion", label: "Conclusion", icon: "check" },
+        ];
+
+        // Dynamically Populate Navigation Elements
+        const desktopSidebar = document.getElementById("desktop-sidebar");
+        const mobileLinks = document.getElementById("mobile-menu-links");
+
+        navigationSections.forEach(section => {
+            // Render desktop sidebar links
+            const deskLink = document.createElement("a");
+            deskLink.href = `#${section.id}`;
+            deskLink.className = "pl-4 py-2 border-l border-zinc-800 text-zinc-400 hover:text-white hover:border-zinc-700 transition flex items-center space-x-2 text-xs font-sans tracking-wide sidebar-item-link";
+            deskLink.setAttribute("data-target", section.id);
+            deskLink.innerHTML = `<i data-lucide="${section.icon}" class="w-3.5 h-3.5 text-zinc-500 shrink-0"></i> <span>${section.label}</span>`;
+            desktopSidebar.appendChild(deskLink);
+
+            // Render mobile links
+            const mobLink = document.createElement("a");
+            mobLink.href = `#${section.id}`;
+            mobLink.className = "p-3 bg-zinc-900 rounded-lg flex items-center space-x-3 text-zinc-300 hover:text-white font-medium hover:bg-zinc-800 transition";
+            mobLink.innerHTML = `<i data-lucide="${section.icon}" class="w-4 h-4 text-brand-indigo shrink-0"></i> <span>${section.label}</span>`;
+            // Add click listener to close mobile menu
+            mobLink.addEventListener("click", () => {
+                document.getElementById("mobile-sidebar").classList.add("hidden");
+            });
+            mobileLinks.appendChild(mobLink);
+        });
+
+        // Re-run Lucide Icons to bind newly created icons
+        lucide.createIcons();
+
+        // Responsive Mobile Menu Drawer handlers
+        const mobileToggle = document.getElementById("mobile-menu-toggle");
+        const mobileClose = document.getElementById("mobile-menu-close");
+        const mobileSidebar = document.getElementById("mobile-sidebar");
+
+        mobileToggle.addEventListener("click", () => {
+            mobileSidebar.classList.remove("hidden");
+        });
+        mobileClose.addEventListener("click", () => {
+            mobileSidebar.classList.add("hidden");
+        });
+
+        // ScrollSpy logic to dynamically update active sidebar link highlight
+        const observerOptions = {
+            root: null,
+            rootMargin: '0px',
+            threshold: 0.15
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    const id = entry.target.getAttribute("id");
+                    document.querySelectorAll(".sidebar-item-link").forEach(link => {
+                        if (link.getAttribute("data-target") === id) {
+                            link.classList.add("sidebar-active");
+                        } else {
+                            link.classList.remove("sidebar-active");
+                        }
+                    });
+                }
+            });
+        }, observerOptions);
+
+        document.querySelectorAll("section[id]").forEach(section => {
+            observer.observe(section);
+        });
+
+        // Code Copy-to-Clipboard logic
+        document.querySelectorAll(".copy-btn").forEach(btn => {
+            btn.addEventListener("click", () => {
+                const targetId = btn.getAttribute("data-target");
+                const codeBlock = document.getElementById(targetId);
+                
+                // Copy utilizing iframe friendly fallback logic
+                const range = document.createRange();
+                range.selectNode(codeBlock);
+                window.getSelection().removeAllRanges();
+                window.getSelection().addRange(range);
+                
+                try {
+                    document.execCommand("copy");
+                    const origHtml = btn.innerHTML;
+                    btn.innerHTML = `<i data-lucide="check" class="w-3.5 h-3.5 text-brand-emerald"></i> <span class="text-brand-emerald">Copied!</span>`;
+                    lucide.createIcons();
+                    setTimeout(() => {
+                        btn.innerHTML = origHtml;
+                        lucide.createIcons();
+                    }, 2000);
+                } catch (err) {
+                    console.error("Copy failed", err);
+                }
+                window.getSelection().removeAllRanges();
+            });
+        });
+
+        // Accordion (FAQ Questions) logic
+        document.querySelectorAll(".faq-btn").forEach(btn => {
+            btn.addEventListener("click", () => {
+                const content = btn.nextElementSibling;
+                const icon = btn.querySelector("[data-lucide='chevron-down']");
+                
+                if (content.classList.contains("hidden")) {
+                    content.classList.remove("hidden");
+                    if (icon) icon.style.transform = "rotate(180deg)";
+                } else {
+                    content.classList.add("hidden");
+                    if (icon) icon.style.transform = "rotate(0deg)";
+                }
+            });
+        });
+
+        // FAQ Search filtering logic
+        const faqSearch = document.getElementById("faq-search");
+        faqSearch.addEventListener("input", () => {
+            const query = faqSearch.value.toLowerCase().trim();
+            document.querySelectorAll(".faq-item").forEach(item => {
+                const keyword = item.getAttribute("data-keyword").toLowerCase();
+                if (keyword.includes(query) || item.innerText.toLowerCase().includes(query)) {
+                    item.style.display = "block";
+                } else {
+                    item.style.display = "none";
+                }
+            });
+        });
+
+        // Project Directory interactive descriptions data
+        const treeDetails = {
+            "ingestion-desc": {
+                title: "Data Ingestion (data_ingestion.py)",
+                body: "Handles connections to raw data sources, creates unified destination directories under <code>artifacts/</code>, and splits the data into robust Train and Test datasets (80/20 division ratio) using fixed seeds for reproducible results.",
+                meta: "Artifacts Generated: raw.csv, train.csv, test.csv"
+            },
+            "transform-desc": {
+                title: "Data Preprocessing (data_transformation.py)",
+                body: "Engineers Scikit-Learn Pipelines and ColumnTransformers. Applies median imputation and standard scaling to numerical features, and mode imputation and one-hot encoding to categorical features, saving a single, reusable <code>preprocessor.pkl</code> artifact.",
+                meta: "Artifacts Generated: preprocessor.pkl"
+            },
+            "trainer-desc": {
+                title: "Model Optimization Core (model_trainer.py)",
+                body: "Evaluates 10 candidate machine learning models using cross-validated GridSearchCV hyperparameter tuning. If the best performer exceeds an accuracy threshold ($R^2 > 0.60$), it is serialized to <code>model.pkl</code>.",
+                meta: "Artifacts Generated: model.pkl"
+            },
+            "pipeline-desc": {
+                title: "Runtime Inference Engine (predict_pipeline.py)",
+                body: "Validates incoming user inputs using a Custom Data Transfer Object (DTO), maps values to a DataFrame matching the training schema, transforms the features using <code>preprocessor.pkl</code>, and runs inference using <code>model.pkl</code>.",
+                meta: "Service Boundary: Real-Time Predictions"
+            },
+            "utils-desc": {
+                title: "Utility Frameworks (utils.py & exception.py)",
+                body: "Contains helper functions for artifact saving/loading and model evaluations. Custom exception tracking captures detailed error metadata, including script name and line numbers, to streamline production debugging.",
+                meta: "Core Package Utilities"
+            },
+            "entry-desc": {
+                title: "Entry Points & Containers (app.py & Dockerfile)",
+                body: "<code>app.py</code> starts the Flask microservice to process incoming HTTP requests. The <code>Dockerfile</code> packages the application into a lightweight, containerized image ready for production deployment.",
+                meta: "Entry Points"
+            }
+        };
+
+        // Tree interaction listener
+        document.querySelectorAll(".tree-item").forEach(item => {
+            item.addEventListener("click", () => {
+                const targetKey = item.getAttribute("data-target");
+                const detail = treeDetails[targetKey];
+                const detailPanel = document.getElementById("tree-detail-content");
+                
+                detailPanel.innerHTML = `
+                    <h4 class="text-white font-bold text-base mb-2 flex items-center gap-2">
+                        <i data-lucide="arrow-right-circle" class="w-4 h-4 text-brand-indigo"></i>
+                        ${detail.title}
+                    </h4>
+                    <p class="text-zinc-400 mb-4 leading-relaxed">${detail.body}</p>
+                    <span class="px-2 py-1 bg-zinc-950 border border-zinc-800 text-[10px] font-mono text-brand-emerald rounded-md inline-block">${detail.meta}</span>
+                `;
+                lucide.createIcons();
+            });
+        });
+
+        // Interactive Live Simulator Calculations
+        // Simulates the linear regression weights evaluated for student performance metrics
+        function computeSimulatedScore() {
+            const gender = document.getElementById("form-gender").value;
+            const ethnicity = document.getElementById("form-ethnicity").value;
+            const education = document.getElementById("form-education").value;
+            const lunch = document.getElementById("form-lunch").value;
+            const prep = document.getElementById("form-prep").value;
+            const reading = parseFloat(document.getElementById("form-reading").value) || 0;
+            const writing = parseFloat(document.getElementById("form-writing").value) || 0;
+
+            // Baseline regression intercept
+            let predictedVal = 18.5;
+
+            // Reading and Writing are highly correlated with math performance in our linear model
+            predictedVal += reading * 0.45;
+            predictedVal += writing * 0.35;
+
+            // Demographic & Sociological adjustments based on model coefficients
+            if (gender === "male") predictedVal += 3.2; // Males slightly outscore in quantitative benchmarks
+            if (gender === "female") predictedVal -= 1.1;
+
+            if (ethnicity === "group E") predictedVal += 4.5;
+            if (ethnicity === "group A") predictedVal -= 2.5;
+
+            if (lunch === "free/reduced") predictedVal -= 5.8; // Lower socio-economic metrics impact score baseline
+            if (prep === "completed") predictedVal += 3.8; // Prep program completions boost quantitative metrics
+
+            if (education === "master's degree" || education === "bachelor's degree") predictedVal += 2.0;
+
+            // Boundaries constrain between standard academic scales
+            predictedVal = Math.min(100, Math.max(0, predictedVal));
+
+            // Render Output dynamically
+            const outNode = document.getElementById("predicted-score-output");
+            outNode.innerText = predictedVal.toFixed(2);
+        }
+
+        // Bind simulator elements to compute prediction dynamically on change or run click
+        document.getElementById("run-simulation-btn").addEventListener("click", computeSimulatedScore);
+        const simFields = ["gender", "ethnicity", "education", "lunch", "prep", "reading", "writing"];
+        simFields.forEach(fieldId => {
+            document.getElementById(`form-${fieldId}`).addEventListener("change", computeSimulatedScore);
+        });
+
+        // Initialize Metrics Chart via Chart.js
+        window.onload = function() {
+            const ctx = document.getElementById('metricsChart').getContext('2d');
+            const dataScores = [88.03, 88.01, 87.82, 85.42, 85.16, 84.91, 84.79, 82.11, 73.21, 58.91];
+            const labels = ["Linear Regression", "Ridge", "Lasso", "XGBoost", "CatBoost", "Random Forest", "Gradient Boosting", "AdaBoost", "Decision Tree", "KNN Regressor"];
+
+            new Chart(ctx, {
+                type: 'bar',
+                data: {
+                    labels: labels,
+                    datasets: [{
+                        label: 'Validation R² Score (%)',
+                        data: dataScores,
+                        backgroundColor: function(context) {
+                            const index = context.dataIndex;
+                            if (index === 0) return '#10b981'; // Winner is Green
+                            return 'rgba(99, 102, 241, 0.45)'; // Others Indigo
+                        },
+                        borderColor: function(context) {
+                            const index = context.dataIndex;
+                            if (index === 0) return '#10b981';
+                            return '#6366f1';
+                        },
+                        borderWidth: 1.5,
+                        borderRadius: 6
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        legend: {
+                            display: false
+                        }
+                    },
+                    scales: {
+                        x: {
+                            grid: {
+                                color: '#1f1f23'
+                            },
+                            ticks: {
+                                color: '#a1a1aa',
+                                font: {
+                                    family: 'JetBrains Mono',
+                                    size: 9
+                                }
+                            }
+                        },
+                        y: {
+                            grid: {
+                                color: '#1f1f23'
+                            },
+                            ticks: {
+                                color: '#a1a1aa',
+                                font: {
+                                    family: 'JetBrains Mono',
+                                    size: 9
+                                }
+                            },
+                            min: 40,
+                            max: 100
+                        }
+                    }
+                }
+            });
+            
+            // Execute baseline simulation prediction on startup
+            computeSimulatedScore();
+        };
+    </script>
+</body>
+</html>
